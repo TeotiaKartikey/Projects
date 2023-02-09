@@ -3,6 +3,7 @@
 #include<utility>
 using namespace std;
 
+
 bool condition_check(vector<char>);
 bool pos_check (int,vector<char>);
 void display(vector<char>);
