@@ -1,0 +1,152 @@
+#include<iostream>
+#include<vector>
+#include<utility>
+using namespace std;
+
+bool condition_check(vector<char>);
+bool pos_check (int,vector<char>);
+void display(vector<char>);
+vector<char> change_val(vector<char> &,int,char);
+
+int main()
+{
+    int i,pos;
+    char k;
+    bool x = false, y = false;
+    vector<char> v;
+    for(i=1;i<=9;i++)
+    {
+        v.push_back(char(i+48));
+    }
+    cout<<"\t\t\t********* TICK - TAC - TOE **********\t\t\t\n";
+    cout<<"\t\t\t\t Chalo Khele India"<<endl<<endl;
+    cout<<"Rules:"<<endl;
+    cout<<"1. Two Players game: Player_1 [X] & Player_2 [O]"<<endl;
+    cout<<"2. Each Player moves alternatively"<<endl;
+    cout<<"3. Enter number marked to place your symbol at particular location"<<endl;
+    cout<<"4. Symbols can neither be moved nor overwritten once placed"<<endl;
+    cout<<"5. Player wins when finds his symbol in a line (horizontal/vertical/diagonal)"<<endl;
+    cout<<"Sample game board:"<<endl;
+    display(v);
+    cout<<"\nLet's Begin:"<<endl;
+    i=1;
+    while(x == false )
+    {
+        while(y == false)
+        {
+            cout<<"Player_1's move: ";
+            cin>>pos;
+            y = pos_check(pos,v);
+        }
+        v = change_val(v,pos,'X');
+        
+        y = false;
+        display(v);
+        x = condition_check(v);
+        if(x == true)
+        {
+            cout<<"\nCongratulations!!! Player_1. You win this game\n";
+            exit(0);
+        }
+        cout<<"\n";
+        i++;
+        if(i>9)
+        goto label;
+        while(y == false)
+        {
+            cout<<"Player_2's move: ";
+            cin>>pos;
+            y = pos_check(pos,v);
+        }
+        v = change_val(v,pos,'O');
+        
+        y = false;
+        display(v);
+        x = condition_check(v);
+        if(x == true)
+        {
+            cout<<"\nCongratulations!!! Player_2. You win this game\n";
+            exit(0);
+        }
+        i++;
+        if(i>9)
+        {
+            label:
+                {
+                    cout<<"\nMatch Drawn!\n";
+                    exit(0);
+                }
+        }
+        cout<<"\n";
+    }
+}
+
+bool condition_check(vector<char> v)
+    {
+        char k;
+        bool x=false;
+        if( (v[0] == v[1] && v[1] == v[2]) || (v[0] == v[3] && v[3] == v[6]) || (v[0] == v[4] && v[4] == v[8]) || (v[1] == v[4] && v[4] == v[7]) || (v[2] == v[5] && v[5] == v[8]) || (v[2] == v[4] && v[4] == v[6]) || (v[3] == v[4] && v[4] == v[5]) || (v[6] == v[7] && v[7] == v[8]) )
+            x = true;
+        return x;
+    }
+    
+bool pos_check (int pos,vector<char> v)
+{
+    bool y = true;
+    if(v[pos-1] == 'X' || v[pos-1] == 'O')
+    {
+        cout<<"\nINVALID INPUT\n";
+        y=false;
+    }
+    return y;
+}
+
+vector<char> change_val(vector<char> &v, int pos, char ch)
+{
+    switch(pos)
+    {
+        case 1: v[0] = ch;
+        break;
+        
+        case 2: v[1] = ch;
+        break;
+        
+        case 3: v[2] = ch;
+        break;
+        
+        case 4: v[3] = ch;
+        break;
+        
+        case 5: v[4] = ch;
+        break;
+        
+        case 6: v[5] = ch;
+        break;
+        
+        case 7: v[6] = ch;
+        break;
+        
+        case 8: v[7] = ch;
+        break;
+        
+        case 9: v[8] = ch;
+        break;
+        
+        default: cout<<"\nINVALID INPUT\n";
+        break;
+    }
+    return v;
+}
+
+void display(vector<char> v)
+{
+    cout<<"\t\t\t\t     |     |     \n";
+    cout<<"\t\t\t\t  "<<v[0]<<"  |  "<<v[1]<<"  |  "<<v[2]<<"  \n";
+    cout<<"\t\t\t\t_____|_____|_____\n";
+    cout<<"\t\t\t\t     |     |     \n";
+    cout<<"\t\t\t\t  "<<v[3]<<"  |  "<<v[4]<<"  |  "<<v[5]<<"  \n";
+    cout<<"\t\t\t\t_____|_____|_____\n";
+    cout<<"\t\t\t\t     |     |     \n";
+    cout<<"\t\t\t\t  "<<v[6]<<"  |  "<<v[7]<<"  |  "<<v[8]<<"  \n";
+    cout<<"\t\t\t\t     |     |     \n";
+}
